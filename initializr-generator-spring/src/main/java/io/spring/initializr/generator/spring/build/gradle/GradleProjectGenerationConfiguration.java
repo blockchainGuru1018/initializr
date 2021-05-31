@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2020 the original author or authors.
+ * Copyright 2012-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,7 @@ public class GradleProjectGenerationConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnGradleVersion({ "4", "5", "6" })
+	@ConditionalOnGradleVersion({ "6", "7" })
 	BuildCustomizer<GradleBuild> springBootPluginContributor(ProjectDescription description,
 			ObjectProvider<DependencyManagementPluginVersionResolver> versionResolver, InitializrMetadata metadata) {
 		return new SpringBootPluginBuildCustomizer(description, versionResolver
@@ -123,35 +123,6 @@ public class GradleProjectGenerationConfiguration {
 	}
 
 	/**
-	 * Configuration specific to projects using Gradle 4.
-	 */
-	@Configuration
-	@ConditionalOnGradleVersion("4")
-	@ConditionalOnBuildSystem(GradleBuildSystem.ID)
-	static class Gradle4ProjectGenerationConfiguration {
-
-		@Bean
-		GradleWrapperContributor gradle4WrapperContributor() {
-			return new GradleWrapperContributor("4");
-		}
-
-	}
-
-	/**
-	 * Configuration specific to projects using Gradle 5.
-	 */
-	@Configuration
-	@ConditionalOnGradleVersion("5")
-	static class Gradle5ProjectGenerationConfiguration {
-
-		@Bean
-		GradleWrapperContributor gradle5WrapperContributor() {
-			return new GradleWrapperContributor("5");
-		}
-
-	}
-
-	/**
 	 * Configuration specific to projects using Gradle 6.
 	 */
 	@Configuration
@@ -166,11 +137,25 @@ public class GradleProjectGenerationConfiguration {
 	}
 
 	/**
-	 * Configuration specific to projects using Gradle (Groovy DSL) 4, 5 or 6.
+	 * Configuration specific to projects using Gradle 7.
+	 */
+	@Configuration
+	@ConditionalOnGradleVersion("7")
+	static class Gradle7ProjectGenerationConfiguration {
+
+		@Bean
+		GradleWrapperContributor gradle7WrapperContributor() {
+			return new GradleWrapperContributor("7");
+		}
+
+	}
+
+	/**
+	 * Configuration specific to projects using Gradle (Groovy DSL).
 	 */
 	@Configuration
 	@ConditionalOnBuildSystem(id = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_GROOVY)
-	@ConditionalOnGradleVersion({ "4", "5", "6" })
+	@ConditionalOnGradleVersion({ "6", "7" })
 	static class Gradle4Or5ProjectGenerationConfiguration {
 
 		@Bean
@@ -213,7 +198,7 @@ public class GradleProjectGenerationConfiguration {
 	 */
 	@Configuration
 	@ConditionalOnBuildSystem(id = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_KOTLIN)
-	@ConditionalOnGradleVersion({ "5", "6" })
+	@ConditionalOnGradleVersion({ "6", "7" })
 	static class GradleKtsProjectGenerationConfiguration {
 
 		@Bean

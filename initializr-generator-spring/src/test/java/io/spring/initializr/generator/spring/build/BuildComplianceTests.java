@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2020 the original author or authors.
+ * Copyright 2012-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,30 +116,6 @@ class BuildComplianceTests extends AbstractComplianceTests {
 
 	@ParameterizedTest
 	@MethodSource("parameters")
-	void previousGenerationJarJava(BuildSystem build, String fileName) {
-		testPreviousGenerationJar(java, build, fileName);
-	}
-
-	@ParameterizedTest
-	@MethodSource("parameters")
-	void previousGenerationJarGroovy(BuildSystem build, String fileName) {
-		testPreviousGenerationJar(groovy, build, fileName);
-	}
-
-	@ParameterizedTest
-	@MethodSource("parameters")
-	void previousGenerationJarKotlin(BuildSystem build, String fileName) {
-		testPreviousGenerationJar(kotlin, build, fileName);
-	}
-
-	private void testPreviousGenerationJar(Language language, BuildSystem build, String fileName) {
-		ProjectStructure project = generateProject(language, build, "2.1.0.RELEASE");
-		assertThat(project).textFile(fileName).hasSameContentAs(
-				new ClassPathResource("project/" + language + "/previous/" + getAssertFileName(fileName)));
-	}
-
-	@ParameterizedTest
-	@MethodSource("parameters")
 	void kotlinJava11(BuildSystem build, String fileName) {
 		ProjectStructure project = generateProject(kotlin, build, "2.4.1",
 				(description) -> description.setLanguage(Language.forId(kotlin.id(), "11")));
@@ -242,8 +218,8 @@ class BuildComplianceTests extends AbstractComplianceTests {
 		Dependency bar = Dependency.withId("bar", "org.acme", "bar");
 		bar.setRepository("bar-repository");
 		InitializrMetadata metadata = InitializrMetadataTestBuilder.withDefaults().addDependencyGroup("test", foo, bar)
-				.addRepository("foo-repository", "foo-repo", "https://example.com/foo", false)
-				.addRepository("bar-repository", "bar-repo", "https://example.com/bar", true).build();
+				.addReleasesRepository("foo-repository", "foo-repo", "https://example.com/foo")
+				.addSnapshotsRepository("bar-repository", "bar-repo", "https://example.com/bar").build();
 		ProjectStructure project = generateProject(java, build, "2.4.1", (description) -> {
 			description.addDependency("foo", MetadataBuildItemMapper.toDependency(foo));
 			description.addDependency("bar", MetadataBuildItemMapper.toDependency(bar));
@@ -259,7 +235,7 @@ class BuildComplianceTests extends AbstractComplianceTests {
 		InitializrMetadata metadata = InitializrMetadataTestBuilder.withDefaults().addDependencyGroup("test", foo)
 				.build();
 		ProjectStructure project = generateProject(java, build, "2.4.1", (description) -> {
-			description.setPlatformVersion(Version.parse("2.2.0.M1"));
+			description.setPlatformVersion(Version.parse("2.4.0-M1"));
 			description.addDependency("foo", MetadataBuildItemMapper.toDependency(foo));
 		}, metadata);
 		assertThat(project).textFile(fileName).hasSameContentAs(
