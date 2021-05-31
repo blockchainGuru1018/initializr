@@ -4,12 +4,14 @@ Ensure that you've setup the target and can login
 
 [source]
 ----
-$ fly -t initializr login -n initializr -c https://ci.spring.io
+$ fly -t initializr login -n initializr-temp -c https://ci.spring.io
 ----
 
 The pipeline can be deployed using the following command:
 
 [source]
+----
+$ fly -t initializr set-pipeline -p initializr-temp -c ci/pipeline.yml -l ci/parameters.yml
 $ fly -t initializr set-pipeline -p initializr-central-ci0.10.x -c ci/pipeline.yml -l ci/parameters.yml
 $ fly -t initializr set-pipeline -p initializr-0.11.x -c ci/pipeline.yml -l ci/parameters.yml
 
