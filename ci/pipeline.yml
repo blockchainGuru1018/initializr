@@ -38,6 +38,8 @@ anchors:
     icon_emoji: ":concourse:"
     username: concourse-ci
   sontatype-task-params: &sonatype-task-params
+    SONATYPE_USER_TOKEN: ((sonatype-user-token))
+    SONATYPE_PASSWORD_TOKEN: ((sonatype-user-token-password))
     SONATYPE_USERNAME: ((sonatype-username))
     SONATYPE_PASSWORD: ((sonatype-password))
     SONATYPE_URL: ((sonatype-url))
