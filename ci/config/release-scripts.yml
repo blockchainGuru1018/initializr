@@ -7,3 +7,10 @@ distribute:
 spring:
   main:
     banner-mode: off
+spring:
+  main:
+    banner-mode: off
+sonatype:
+  exclude:
+    - 'build-info\.json'
+    - '.*\.zip'

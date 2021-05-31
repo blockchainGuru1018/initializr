@@ -11,6 +11,13 @@ java -jar /opt/concourse-release-scripts.jar promote $RELEASE_TYPE $BUILD_INFO_L
 java -jar /opt/concourse-release-scripts.jar \
   --spring.config.location=${CONFIG_DIR}/release-scripts.yml \
   distribute $RELEASE_TYPE $BUILD_INFO_LOCATION || { exit 1; }
+java -jar /opt/concourse-release-scripts.jar \
+  --spring.config.location=${CONFIG_DIR}/release-scripts.yml \
+  publishToCentral $RELEASE_TYPE $BUILD_INFO_LOCATION artifactory-repo || { exit 1; }
+
+java -jar /opt/concourse-release-scripts.jar \
+  --spring.config.location=${CONFIG_DIR}/release-scripts.yml \
+  promote $RELEASE_TYPE $BUILD_INFO_LOCATION || { exit 1; }
 
 echo "Promotion complete"
 echo $version > version/version
