@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.spring.initializr</groupId>
 	<artifactId>initializr</artifactId>
-	<version>1.0.0.BUILD-SNAPSHOT</version>
+	<version>${revision}</version>
 	<packaging>pom</packaging>
 	<name>Spring Initializr</name>
-	<description>A web-based quickstart generator for Spring projects</description>
+	<description>JVM-based project generator</description>
 	<url>https://github.com/spring-io/initializr</url>
 	<organization>
 		<name>Pivotal Software, Inc.</name>
-		<url>http://www.spring.io</url>
+		<url>https://www.spring.io</url>
 	</organization>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:git:https://github.com/spring-io/initializr</connection>
-		<url>https://github.com/spring-io/initializr</url>
+		<url>${git.url}</url>
+		<connection>${git.connection}</connection>
+		<developerConnection>${git.developerConnection}</developerConnection>
 	</scm>
 	<developers>
 		<developer>
@@ -29,7 +30,7 @@
 			<name>Stephane Nicoll</name>
 			<email>snicoll at pivotal.io</email>
 			<organization>Pivotal Software, Inc.</organization>
-			<organizationUrl>http://www.spring.io</organizationUrl>
+			<organizationUrl>https://www.spring.io</organizationUrl>
 			<roles>
 				<role>Project lead</role>
 			</roles>
@@ -37,158 +38,196 @@
 	</developers>
 
 	<properties>
+		<revision>0.10.3-SNAPSHOT</revision>
+		<disable.checks>false</disable.checks>
+		<git.url>https://github.com/spring-io/initializr</git.url>
+		<git.connection>scm:git:https://github.com/spring-io/initializr</git.connection>
+		<git.developerConnection>scm:git:ssh://git@github.com/spring-io/initializr.git</git.developerConnection>
+		<main.basedir>${basedir}</main.basedir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>1.4.0.RELEASE</spring.boot.version>
-		<java.version>1.8</java.version>
 	</properties>
 
 	<modules>
 		<module>initializr-actuator</module>
+		<module>initializr-bom</module>
+		<module>initializr-docs</module>
 		<module>initializr-generator</module>
+		<module>initializr-generator-spring</module>
+		<module>initializr-generator-test</module>
+		<module>initializr-metadata</module>
+		<module>initializr-parent</module>
+		<module>initializr-service-sample</module>
+		<module>initializr-version-resolver</module>
 		<module>initializr-web</module>
 	</modules>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>io.spring.initializr</groupId>
-				<artifactId>initializr-actuator</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>io.spring.initializr</groupId>
-				<artifactId>initializr-generator</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>io.spring.initializr</groupId>
-				<artifactId>initializr-generator</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
-				<type>test-jar</type>
-			</dependency>
-			<dependency>
-				<groupId>io.spring.initializr</groupId>
-				<artifactId>initializr-web</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>io.spring.initializr</groupId>
-				<artifactId>initializr-web</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
-				<type>test-jar</type>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring.boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>xmlunit</groupId>
-				<artifactId>xmlunit</artifactId>
-				<version>1.5</version>
-			</dependency>
-			<dependency>
-				<groupId>org.gebish</groupId>
-				<artifactId>geb-core</artifactId>
-				<version>0.10.0</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.codehaus.groovy</groupId>
-						<artifactId>groovy-all</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+				<inherited>false</inherited>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
-					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.6</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.gmavenplus</groupId>
-					<artifactId>gmavenplus-plugin</artifactId>
-					<version>1.5</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>addSources</goal>
-								<goal>addTestSources</goal>
-								<goal>compile</goal>
-								<goal>testCompile</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.16</version>
-					<configuration>
-						<includes>
-							<include>**/*Tests.java</include>
-						</includes>
-						<excludes>
-							<exclude>**/Abstract*.java</exclude>
-							<exclude>**/*SmokeTests.java</exclude>
-						</excludes>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<version>${spring.boot.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>pl.project13.maven</groupId>
-					<artifactId>git-commit-id-plugin</artifactId>
-					<version>2.1.11</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<profiles>
 		<profile>
-			<id>full</id>
-			<modules>
-				<module>initializr-service</module>
-			</modules>
+			<id>default</id>
+			<activation>
+				<property>
+					<name>!disable-initializr-default-profile</name>
+				</property>
+			</activation>
+			<properties>
+				<spring-javaformat.version>0.0.26</spring-javaformat.version>
+				<nohttp-checkstyle.version>0.0.5.RELEASE</nohttp-checkstyle.version>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.spring.javaformat</groupId>
+						<artifactId>spring-javaformat-maven-plugin</artifactId>
+						<version>${spring-javaformat.version}</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<configuration>
+									<skip>${disable.checks}</skip>
+								</configuration>
+								<goals>
+									<goal>validate</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<version>3.1.1</version>
+						<dependencies>
+							<dependency>
+								<groupId>com.puppycrawl.tools</groupId>
+								<artifactId>checkstyle</artifactId>
+								<version>8.32</version>
+							</dependency>
+							<dependency>
+								<groupId>io.spring.javaformat</groupId>
+								<artifactId>spring-javaformat-checkstyle</artifactId>
+								<version>${spring-javaformat.version}</version>
+							</dependency>
+							<dependency>
+								<groupId>io.spring.nohttp</groupId>
+								<artifactId>nohttp-checkstyle</artifactId>
+								<version>${nohttp-checkstyle.version}</version>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<id>checkstyle-validation</id>
+								<phase>validate</phase>
+								<configuration>
+									<skip>${disable.checks}</skip>
+									<configLocation>src/checkstyle/checkstyle.xml</configLocation>
+									<suppressionsLocation>src/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+									<includeTestSourceDirectory>true</includeTestSourceDirectory>
+									<propertyExpansion>main.basedir=${main.basedir}</propertyExpansion>
+								</configuration>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>nohttp-checkstyle-validation</id>
+								<phase>validate</phase>
+								<configuration>
+									<skip>${disable.checks}</skip>
+									<configLocation>src/checkstyle/nohttp-checkstyle.xml</configLocation>
+									<suppressionsLocation>src/checkstyle/nohttp-checkstyle-suppressions.xml</suppressionsLocation>
+									<propertyExpansion>main.basedir=${main.basedir}</propertyExpansion>
+									<encoding>UTF-8</encoding>
+									<sourceDirectories>${basedir}</sourceDirectories>
+									<includes>**/*</includes>
+									<excludes>**/.git/**/*,**/.idea/**/*,**/target/**/,**/.flattened-pom.xml,**/*.class</excludes>
+								</configuration>
+								<goals>
+									<goal>check</goal>
+								</goals>
+								<inherited>false</inherited>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>m2e</id>
+			<activation>
+				<property>
+					<name>m2e.version</name>
+				</property>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<!-- This plugin's configuration is used to store Eclipse m2e
+						     settings only. It has no influence on the Maven build
+						     itself. -->
+						<plugin>
+							<groupId>org.eclipse.m2e</groupId>
+							<artifactId>lifecycle-mapping</artifactId>
+							<version>1.0.0</version>
+							<configuration>
+								<lifecycleMappingMetadata>
+									<pluginExecutions>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.apache.maven.plugins</groupId>
+												<artifactId>maven-checkstyle-plugin</artifactId>
+												<versionRange>[3.0.0,)</versionRange>
+												<goals>
+													<goal>check</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore/>
+											</action>
+										</pluginExecution>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.codehaus.mojo</groupId>
+												<artifactId>flatten-maven-plugin</artifactId>
+												<versionRange>[1.0.0,)</versionRange>
+												<goals>
+													<goal>flatten</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore/>
+											</action>
+										</pluginExecution>
+									</pluginExecutions>
+								</lifecycleMappingMetadata>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+		<profile>
+			<id>fast</id>
+			<activation>
+				<property>
+					<name>fast</name>
+				</property>
+			</activation>
+			<properties>
+				<disable.checks>true</disable.checks>
+			</properties>
 		</profile>
 	</profiles>
 

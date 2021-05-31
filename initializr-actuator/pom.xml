@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>io.spring.initializr</groupId>
-		<artifactId>initializr</artifactId>
-		<version>1.0.0.BUILD-SNAPSHOT</version>
+		<artifactId>initializr-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../initializr-parent</relativePath>
 	</parent>
 	<artifactId>initializr-actuator</artifactId>
 	<name>Spring Initializr :: Actuator</name>
+
+	<properties>
+		<main.basedir>${basedir}/..</main.basedir>
+	</properties>
+	<scm>
+		<url>${git.url}</url>
+		<connection>${git.connection}</connection>
+		<developerConnection>${git.developerConnection}</developerConnection>
+	</scm>
 
 	<dependencies>
 		<dependency>
 			<groupId>io.spring.initializr</groupId>
 			<artifactId>initializr-generator</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-actuator</artifactId>
+			<groupId>io.spring.initializr</groupId>
+			<artifactId>initializr-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-redis</artifactId>
-			<optional>true</optional>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-actuator</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -36,18 +48,34 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-actuator-autoconfigure</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-core</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.spring.initializr</groupId>
-			<artifactId>initializr-generator</artifactId>
-			<type>test-jar</type>
+			<artifactId>initializr-generator-spring</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.spring.initializr</groupId>
-			<artifactId>initializr-web</artifactId>
+			<artifactId>initializr-generator-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -67,19 +95,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-mockmvc</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.gmavenplus</groupId>
-				<artifactId>gmavenplus-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

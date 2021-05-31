@@ -1,19 +1,19 @@
 {
   "_links": {
     "maven-build": {
-      "href": "https://localhost:@port@/pom.xml?type=maven-build{&dependencies,packaging,javaVersion,language,bootVersion,groupId,artifactId,version,name,description,packageName}",
+      "href": "http://@host@/pom.xml?type=maven-build{&dependencies,packaging,javaVersion,language,bootVersion,groupId,artifactId,version,name,description,packageName}",
       "templated": true
     },
     "maven-project": {
-      "href": "https://localhost:@port@/starter.zip?type=maven-project{&dependencies,packaging,javaVersion,language,bootVersion,groupId,artifactId,version,name,description,packageName}",
+      "href": "http://@host@/starter.zip?type=maven-project{&dependencies,packaging,javaVersion,language,bootVersion,groupId,artifactId,version,name,description,packageName}",
       "templated": true
     },
     "gradle-build": {
-      "href": "https://localhost:@port@/build.gradle?type=gradle-build{&dependencies,packaging,javaVersion,language,bootVersion,groupId,artifactId,version,name,description,packageName}",
+      "href": "http://@host@/build.gradle?type=gradle-build{&dependencies,packaging,javaVersion,language,bootVersion,groupId,artifactId,version,name,description,packageName}",
       "templated": true
     },
     "gradle-project": {
-      "href": "https://localhost:@port@/starter.zip?type=gradle-project{&dependencies,packaging,javaVersion,language,bootVersion,groupId,artifactId,version,name,description,packageName}",
+      "href": "http://@host@/starter.zip?type=gradle-project{&dependencies,packaging,javaVersion,language,bootVersion,groupId,artifactId,version,name,description,packageName}",
       "templated": true
     }
   },
@@ -151,19 +151,19 @@
   },
   "bootVersion": {
     "type": "single-select",
-    "default": "1.1.4.RELEASE",
+    "default": "2.1.4.RELEASE",
     "values": [
       {
-        "id": "1.2.0.BUILD-SNAPSHOT",
+        "id": "2.4.0.BUILD-SNAPSHOT",
         "name": "Latest SNAPSHOT"
       },
       {
-        "id": "1.1.4.RELEASE",
-        "name": "1.1.4"
+        "id": "2.1.4.RELEASE",
+        "name": "2.1.4"
       },
       {
-        "id": "1.0.2.RELEASE",
-        "name": "1.0.2"
+        "id": "2.2.17.RELEASE",
+        "name": "1.5.17"
       }
     ]
   },
@@ -189,6 +189,6 @@
   },
   "packageName": {
     "type": "text",
-    "default": "com.example"
+    "default": "com.example.demo"
   }
 }
